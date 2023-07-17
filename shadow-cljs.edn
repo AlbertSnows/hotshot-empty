@@ -9,7 +9,14 @@
  []
 
  :builds
- {:app {:target :browser
-        :output-dir "public/js"
-        :asset-path "js"
-        :modules {:main {:entries [router]}}}}}
+ ;; https://shadow-cljs.github.io/docs/UsersGuide.html#target-node
+ {:app {:target :node-script
+        :main router/entry
+        :output-to "public/out/entry.js"
+        :output-dir "public/out/resources"
+        :dev-tools {:repl-init-ns prototyping
+                    :repl-pprint true}}
+  ;; https://shadow-cljs.github.io/docs/UsersGuide.html#target-node-test
+  :test {:target :node-test
+         :output-to "public/test/node-tests.js"
+         :autorun true}}}

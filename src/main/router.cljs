@@ -1,4 +1,4 @@
 (ns router)
 
-(defn calc-hotshot [payload]
-  "Hello World!")
+(defn entry [& cli-args]
+  (prn "hello world"))

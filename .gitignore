@@ -22,3 +22,4 @@ package-lock.json
 /.calva/output-window
 /.clj-kondo
 /.lsp
+/public

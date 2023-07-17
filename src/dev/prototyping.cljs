@@ -1,4 +1,4 @@
-(ns dev.prototyping)
+(ns prototyping)
 
 ;; Calva dev instructions
 ; == You Control what is Evaluated ==
