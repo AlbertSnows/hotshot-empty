@@ -33,7 +33,6 @@
                   "red1" 1
                   "red2" 1})
 
-(def forfeit-shots #{"red1" "red2"})
 
 ;; Extremely rudementary, replaces *ALL* single quotes
 (defn preprocess-json [json-str]
@@ -43,12 +42,20 @@
 (defn strip-ends [s]
   (subs s 1 (dec (count s))))
 
-(defn get-hotshot-score [{:keys [made_shots attempted_shots made_bonus_shots]}]
-  (let [
-        output 0]
+(defn calc-hotshot-score [{:keys [made_shots attempted_shots made_bonus_shots]}]
+  (let [example_made_shots ["green1", "yellow1", "blue2", "red1", "blue2", "gray2", "gray1", "red2", "blue1"] 
+        output "..."]
     output))
 
-(defn calc-hotshot-results [results round] 
+(def forfeit-shots #{"red1" "red2"})
+
+(defn get-hotshot-score [{:keys [made_shots] :as round}]
+  (let [made-forefeit-worthy-shots (filter #(contains? forfeit-shots %) made_shots)
+        exceeded-allowed-forefeit-worthy-shots? (> (count made-forefeit-worthy-shots) 2) 
+        points (if exceeded-allowed-forefeit-worthy-shots? 0 (calc-hotshot-score round))]
+    points))
+
+(defn calc-hotshot-results [results round]
   (let [final-score (get-hotshot-score round)
         output (conj results final-score)]
     output))
@@ -81,19 +88,18 @@
                            'attempted_shots': ['green1', 'yellow1', 'gray2', 'blue1', 'red2']}]}"
         parsed-json (js->clj
                      (parse
-                      (preprocess-json 
+                      (preprocess-json
                        (strip-ends really-weird-json)))
                      :keywordize-keys true)
-        output 
+        output
         ;; parsed-json 
-        (reduce calc-hotshot-results [] parsed-json)
-        ]
+        (reduce calc-hotshot-results [] parsed-json)]
     output)
-  
 
 
 
-  (def really-weird-json 
+
+  (def really-weird-json
     "{[{'made_shots': ['green1', 'gray2', 'red2'],
                    'attempted_shots': ['green1', 'gray2', 'blue2', 'red2']}, 
                    {'made_shots': ['green1', 'yellow1', 'gray2', 'blue1'],
