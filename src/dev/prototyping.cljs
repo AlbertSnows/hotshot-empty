@@ -1,4 +1,7 @@
-(ns prototyping)
+(ns prototyping
+  (:require
+   [shadow.cljs.devtools.api :as shadow]
+   [clojure.java.shell :refer (sh)]))
 
 ;; Calva dev instructions
 ; == You Control what is Evaluated ==
@@ -15,6 +18,7 @@
 
 (defn test-function [params]
   "I don't do anything...")
+
 
 (comment
   (vec '("green1", "gray2", "red2"))
