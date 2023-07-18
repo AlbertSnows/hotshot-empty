@@ -1,15 +1,26 @@
 (ns utility-test (:require
-                  [cljs.test :refer-macros
-                   [deftest is testing run-tests]]))
+                  [utility :refer [parse preprocess-json convert-json-to-clj-data]]
+                  [cljs.core :as core :refer [enable-console-print!]]
+                  [cljs.test
+                   :refer-macros [deftest is testing run-tests]]))
 
-(defn parse-test [] 
-  )
+(deftest parse-test [] 
+  (testing "that parsing works"
+    (is (= 
+         (js->clj #js{:body #js ["hello" "world"]})
+         (js->clj (parse  "{\"body\": [\"hello\", \"world\"]}"))))))
 
-;; Extremely rudementary, replaces *ALL* single quotes
-(defn preprocess-json-test []
+(= (js->clj #js[]) (js->clj #js[]))
 
-  )
+(deftest preprocess-json-test []
+  (testing "if it swaps out single quotes correctly"
+    (is (= "{\"body\": [\"foo\", \"bar\"]}"
+           (preprocess-json "{'body': ['foo', 'bar']}")))))
 
-(defn convert-json-to-clj-data-test [] 
-  
-  )
+(deftest convert-json-to-clj-data-test [] 
+  (testing "that the full parser system parses it into usable clojure data structures"
+    (is (= (convert-json-to-clj-data "{'body': {'beep': ['boop']}}")
+           {:body {:beep ["boop"]}}))))
+
+(enable-console-print!)
+(run-tests)

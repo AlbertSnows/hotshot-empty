@@ -2,47 +2,47 @@
                   [cljs.test :refer-macros
                    [deftest is testing run-tests]]))
 
-(defn update-values []
+(deftest update-values []
 
   )
 
-(defn calc-regular-shots [] 
+(deftest calc-regular-shots [] 
 
   )
 
-(defn qualified-for-GOAT-mode? []
+(deftest qualified-for-GOAT-mode? []
 
   )
 
-(defn build-calc-shots-missed-for-type []
+(deftest build-calc-shots-missed-for-type []
 
   )
 
-(defn calc-deductible-points []
+(deftest calc-deductible-points []
 
   )
 
-(defn calc-heatcheck-points []
+(deftest calc-heatcheck-points []
 
   )
 
-(defn handle-heatcheck-calculation []
+(deftest handle-heatcheck-calculation []
 
   )
 
-(defn calc-hotshot-score []
+(deftest calc-hotshot-score []
 
   )
 
-(defn get-hotshot-score []
+(deftest get-hotshot-score []
 
   )
 
-(defn build-final-score []
+(deftest build-final-score []
 
   )
 
-(defn calc-hotshot-results []
+(deftest calc-hotshot-results []
 
   )
 
