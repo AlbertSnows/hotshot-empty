@@ -5,8 +5,7 @@
   "src/test"
   "src/resources"]
 
- :dependencies
- []
+ :dependencies [[cider/cider-nrepl "0.32.0-alpha1"]]
 
  :builds
  ;; https://shadow-cljs.github.io/docs/UsersGuide.html#target-node
