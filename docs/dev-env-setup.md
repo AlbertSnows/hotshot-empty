@@ -1,10 +1,10 @@
  <!-- how to connect to a working cljs repl with shadow-cljs + calva -->
 
-connect to a running repl
+<!-- connect to a running repl
 shadow-cljs
 node-js
 alt+enter namespace
-it should "just work"
+it should "just work" -->
 <!-- PS E:\Programming\assessments\hotshot> shadow-cljs node-repl
 cljs.user=> shadow-cljs - #4 ready!
 +
