@@ -3,7 +3,7 @@
                  [router :refer [entry]]
                  [cljs.core :as core]
                  [clojure.string :refer [replace]]
-                 [example :refer [example-hotshot-request test-data]]))
+                 [data.example :refer [example-hotshot-request test-data]]))
 
 ;; Calva dev instructions
 ; == You Control what is Evaluated ==
@@ -15,11 +15,8 @@
 
 (comment
   (entry example-hotshot-request)
-  
+
   ;; {:scores-per-round [9 12 23 12 7 0 15 10 14 15], :final-scores [9 21 44 56 63 63 78 88 102 117]}
-
-
-
 
     ;; ["green1" "yellow1" "blue2" "red1" "blue2" "gray2" "gray1" "red2" "blue1"]
   (calc-hotshot-score
@@ -95,4 +92,5 @@
   js->clj
   (vec '("green1", "gray2", "red2"))
   (+ 1 1)
+  
   :rcf)

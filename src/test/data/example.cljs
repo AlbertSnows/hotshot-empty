@@ -1,4 +1,4 @@
-(ns example)
+(ns data.example)
 
 (def test-data "{'body': [
 {

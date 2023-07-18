@@ -6,7 +6,3 @@
    (let [parsed-json (convert-json-to-clj-data hotshot-data)  
          output (calc-hotshot-results (:body parsed-json))]
     output))
-
-(comment 
-  
-  )
