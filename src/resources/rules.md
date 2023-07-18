@@ -16,10 +16,15 @@
 ;; Rounds 1-9 scoring:
 ;; For a heatcheck round, you get 3 bonus shot attempts, worth triple points. 
 ;; Earning a GOAT round earns you 4 bonus shots for that round.
+
 ;; Final round (10th) scoring:
 ;; In a heatcheck final round, you get two bonus shot attempts for each round you made 30+ points 
 ;; (excludes bonus points) over the course of the entire game. These bonus shots are worth double points. 
+
 ;; In a GOAT final round, you get one bonus shot from each of the 8 hotshot spots.
+
 ;;  2 points are deducted for missed red shots. No points deducted for missed bonus red shots.
+
 ;; Upgrades are not mutually exclusive, meaning GOATs and heatchecks can both be earned in individual rounds. Upgrades are only earned with non-bonus shot makes.
+
 ;; Winner is determined by the player with the most points.
