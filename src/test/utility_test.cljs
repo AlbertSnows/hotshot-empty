@@ -1,16 +1,18 @@
 (ns utility-test (:require
-                  [utility :refer [parse preprocess-json convert-json-to-clj-data]]
+                  [utility :refer [update-values parse preprocess-json convert-json-to-clj-data]]
                   [cljs.core :as core :refer [enable-console-print!]]
-                  [cljs.test
-                   :refer-macros [deftest is testing run-tests]]))
+                  [cljs.test :refer-macros [deftest is testing run-tests]]))
+
+(defn update-values-test []
+  (testing "that mapping across data works"
+    (= {:foo 1 :bar 2 :biz -1}
+       (update-values {:foo 0 :bar 1 :biz -2} inc))))
 
 (deftest parse-test [] 
   (testing "that parsing works"
     (is (= 
          (js->clj #js{:body #js ["hello" "world"]})
          (js->clj (parse  "{\"body\": [\"hello\", \"world\"]}"))))))
-
-(= (js->clj #js[]) (js->clj #js[]))
 
 (deftest preprocess-json-test []
   (testing "if it swaps out single quotes correctly"

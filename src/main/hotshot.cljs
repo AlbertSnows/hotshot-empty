@@ -1,4 +1,5 @@
-(ns hotshot)
+(ns hotshot (:require 
+             [utility :refer [update-values]]))
 ;; additional work consideratinos
 ;; SUGGESTION: remove invalid types
 
@@ -23,12 +24,6 @@
 (def deductible-shots #{"red1" "red2"})
 
 (def forfeit-shots #{"red1" "red2"})
-
-(defn update-values [map func & args]
-  (let [update-value (fn [updated-map [key value]]
-                       (assoc updated-map key (apply func value args)))
-        map-with-updated-values (reduce update-value {} map)]
-    map-with-updated-values))
 
 (defn calc-regular-shots [made_shots] (reduce #(+ %1 (get point-values %2)) 0 made_shots))
 
