@@ -8,5 +8,5 @@
     output))
 
 (comment 
-  (entry example/example-hotshot-request)
+  
   )

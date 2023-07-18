@@ -24,10 +24,6 @@
 
 (def forfeit-shots #{"red1" "red2"})
 
-
-;; Extremely rudementary, replaces *ALL* single quotes
-
-
 (defn update-values [map func & args]
   (let [update-value (fn [updated-map [key value]]
                        (assoc updated-map key (apply func value args)))
@@ -52,19 +48,22 @@
                                          (count possible-non-duplicate-shots)))]
     qualified-for-GOAT-mode?))
 
+(defn build-calc-shots-missed-for-type [total-non-deductible-shots-made-per-type]
+  (fn [shots-missed-per-spot deductible-shot shots-attempted]
+    (let [possible-shots-made-for-spot (get total-non-deductible-shots-made-per-type deductible-shot)
+          shots-made-for-spot (if (nil? possible-shots-made-for-spot) 0 possible-shots-made-for-spot)
+          shots-missed (- shots-attempted shots-made-for-spot)
+          updated-map (assoc shots-missed-per-spot deductible-shot shots-missed)]
+      updated-map)))
+
 (defn calc-deductible-points [attempted_shots made_shots]
   (let [deductible-attempted-shots (filter #(contains? deductible-shots %) attempted_shots)
         non-deuctible-made-shots (filter #(contains? deductible-shots %) made_shots)
         total-non-deductible-shots-made-per-type (frequencies non-deuctible-made-shots)
         total-deductible-shots-attempted-per-type (frequencies deductible-attempted-shots)
-        calc-shots-missed-for-type (fn [shots-missed-per-spot deductible-shot shots-attempted]
-                                     (let [possible-shots-made-for-spot (get total-non-deductible-shots-made-per-type deductible-shot)
-                                           shots-made-for-spot (if (nil? possible-shots-made-for-spot) 0 possible-shots-made-for-spot)
-                                           shots-missed (- shots-attempted shots-made-for-spot)
-                                           updated-map (assoc shots-missed-per-spot deductible-shot shots-missed)]
-                                       updated-map))
-        amount-missed-for-each-shot (reduce-kv calc-shots-missed-for-type {}
-                                               total-deductible-shots-attempted-per-type)
+        calc-shots-missed-for-type (build-calc-shots-missed-for-type total-non-deductible-shots-made-per-type)
+        amount-missed-for-each-shot 
+        (reduce-kv calc-shots-missed-for-type {} total-deductible-shots-attempted-per-type)
         missed-red-shots (reduce + 0 (vals amount-missed-for-each-shot))]
     missed-red-shots))
 
@@ -86,24 +85,30 @@
           final-score-for-round (+ points-for-round bonus-points (- (* missed-red-shots 2)))]
       final-score-for-round)))
 
-(def calc-hotshot-score-for-final-round (fn [round] ((calc-hotshot-score 2) round)))
-(def calc-hotshot-score-for-normal-round (fn [round] ((calc-hotshot-score 3) round)))
+(defn get-hotshot-score [multiplier]
+  (fn [{:keys [made_shots] :as round}]
+      (let [made-forefeit-worthy-shots (filter #(contains? forfeit-shots %) made_shots)
+            exceeded-allowed-forefeit-worthy-shots? (> (count made-forefeit-worthy-shots) 2)
+            points (if exceeded-allowed-forefeit-worthy-shots? 0 ((calc-hotshot-score multiplier) round))]
+        points)))
 
-(defn get-hotshot-score [{:keys [made_shots] :as round}]
-  (let [made-forefeit-worthy-shots (filter #(contains? forfeit-shots %) made_shots)
-        exceeded-allowed-forefeit-worthy-shots? (> (count made-forefeit-worthy-shots) 2)
-        points (if exceeded-allowed-forefeit-worthy-shots? 0 (calc-hotshot-score-for-normal-round round))]
-    points))
+(defn build-final-score [{:keys [total final-scores]} score]
+  (let [updated-total (+ total score)
+        updated-state {:total updated-total
+                       :final-scores (conj final-scores updated-total)}]
+    updated-state))
+
+(def calc-hotshot-score-for-final-round (fn [round] ((get-hotshot-score 2) round)))
+(def calc-hotshot-score-for-normal-round (fn [round] ((get-hotshot-score 3) round)))
 
 (defn calc-hotshot-results [rounds]
   (let [first-nine-rounds (take 9 rounds)
         tenth-round (nth rounds 9)
-        normal-rounds-final-scores (reduce #(conj %1 (get-hotshot-score %2)) [] first-nine-rounds)
-        scores-for-each-round (conj normal-rounds-final-scores (calc-hotshot-score-for-final-round tenth-round))
-        final-scores (reduce (fn [{:keys [total final-scores]} score]
-                               (let [updated-total (+ total score)]
-                                 {:total updated-total :final-scores (conj final-scores updated-total)}))
-                             {:total 0 :final-scores []} scores-for-each-round)
+        normal-rounds-final-scores 
+        (reduce #(conj %1 (calc-hotshot-score-for-normal-round %2)) [] first-nine-rounds)
+        final-round-score (calc-hotshot-score-for-final-round tenth-round)
+        scores-for-each-round (conj normal-rounds-final-scores final-round-score)
+        final-scores (reduce build-final-score {:total 0 :final-scores []} scores-for-each-round)
         output {:scores-per-round scores-for-each-round
                 :final-scores (:final-scores final-scores)}]
     output))

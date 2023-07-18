@@ -4,6 +4,7 @@
 
 (defn parse [json] (.parse js/JSON json))
 
+;; Extremely rudementary, replaces *ALL* single quotes
 (defn preprocess-json [json-str]
   (-> json-str
       (replace #"'(.*?)'" "\"$1\"")))

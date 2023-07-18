@@ -1,7 +1,9 @@
-(ns prototyping
-  (:require [cljs.core :as core]
-            [clojure.string :refer [replace]]
-            [example :refer [example-hotshot-request test-data]]))
+(ns prototyping (:require
+                 [hotshot :refer [calc-hotshot-score]]
+                 [router :refer [entry]]
+                 [cljs.core :as core]
+                 [clojure.string :refer [replace]]
+                 [example :refer [example-hotshot-request test-data]]))
 
 ;; Calva dev instructions
 ; == You Control what is Evaluated ==
@@ -11,10 +13,14 @@
 ;; The result of loading a file is whatever is the
 ;; last top level form in the file.
 
-
-
 (comment
- 
+  (entry example-hotshot-request)
+  
+  ;; {:scores-per-round [9 12 23 12 7 0 15 10 14 15], :final-scores [9 21 44 56 63 63 78 88 102 117]}
+
+
+
+
     ;; ["green1" "yellow1" "blue2" "red1" "blue2" "gray2" "gray1" "red2" "blue1"]
   (calc-hotshot-score
    {:made_shots ["green1" "yellow1" "blue2" "red1" "blue2" "grey1" "gray1" "red2" "blue1"],
