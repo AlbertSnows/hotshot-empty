@@ -20,4 +20,4 @@ It should "just work".
 
 More info here: <https://calva.io/getting-started/>
 
-![Alt text](image.png)
+![Alt text](../src/resources/image.png)
