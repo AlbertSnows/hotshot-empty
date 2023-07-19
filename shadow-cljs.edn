@@ -2,10 +2,20 @@
 {:source-paths
  ["src/dev"
   "src/main"
-  "src/test"]
+  "src/test"
+  "src/resources"]
 
- :dependencies
- []
+ :dependencies [[cider/cider-nrepl "0.32.0-alpha1"]]
 
  :builds
- {}}
+ ;; https://shadow-cljs.github.io/docs/UsersGuide.html#target-node
+ {:app {:target :node-script
+        :main router/get-hotshot-score
+        :output-to "public/out/get-hotshot-score.js"
+        :output-dir "public/out/resources"
+        :dev-tools {:repl-init-ns prototyping
+                    :repl-pprint true}}
+  ;; https://shadow-cljs.github.io/docs/UsersGuide.html#target-node-test
+  :test {:target :node-test
+         :output-to "public/test/node-tests.js"
+         :autorun true}}}
