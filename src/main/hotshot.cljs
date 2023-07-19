@@ -97,7 +97,7 @@
 (def calc-hotshot-score-for-normal-round (fn [round] ((get-hotshot-score 3) round)))
 
 (defn calc-hotshot-results [rounds]
-  (let [first-nine-rounds (take 9 rounds)
+  (let [first-nine-rounds (take (- (count rounds) 1) rounds)
         tenth-round (nth rounds 9)
         normal-rounds-final-scores 
         (reduce #(conj %1 (calc-hotshot-score-for-normal-round %2)) [] first-nine-rounds)

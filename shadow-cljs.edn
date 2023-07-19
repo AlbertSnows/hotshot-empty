@@ -11,7 +11,7 @@
  ;; https://shadow-cljs.github.io/docs/UsersGuide.html#target-node
  {:app {:target :node-script
         :main router/get-hotshot-score
-        :output-to "public/out/entry.js"
+        :output-to "public/out/get-hotshot-score.js"
         :output-dir "public/out/resources"
         :dev-tools {:repl-init-ns prototyping
                     :repl-pprint true}}
