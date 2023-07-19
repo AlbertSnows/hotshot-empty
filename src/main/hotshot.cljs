@@ -97,8 +97,9 @@
 (def calc-hotshot-score-for-normal-round (fn [round] ((get-hotshot-score 3) round)))
 
 (defn calc-hotshot-results [rounds]
-  (let [first-nine-rounds (take (- (count rounds) 1) rounds)
-        tenth-round (nth rounds 9)
+  (let [number-of-rounds (- (count rounds) 1)
+        first-nine-rounds (take number-of-rounds rounds)
+        tenth-round (nth rounds number-of-rounds)
         normal-rounds-final-scores 
         (reduce #(conj %1 (calc-hotshot-score-for-normal-round %2)) [] first-nine-rounds)
         final-round-score (calc-hotshot-score-for-final-round tenth-round)
@@ -108,3 +109,14 @@
                 :final-scores (:final-scores final-scores)}]
     output))
 
+(comment 
+  (calc-hotshot-results
+  ;;  (take 0
+  ;;  (count 
+  ;; (nth 
+   [{:made_shots ["green1" "yellow1" "gray1" "blue2" "red2"],
+     :attempted_shots ["green1" "yellow1" "gray1" "blue2" "red2"]}]
+         )
+   
+   
+  )
