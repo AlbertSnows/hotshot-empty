@@ -1,6 +1,6 @@
 # Solving Hotshot
 
-Repo to solve the hotshot problem per the request of the assessment. 
+Repo to solve the hotshot problem per the request of the assessment.
 
 Written in [clojurescript.](https://clojurescript.org/)
 
@@ -14,7 +14,7 @@ To build, make sure you have shadow-cljs and all other relevant packages (node, 
 
 Then you can build a node script with the following command
 
-`npx shadow-cljs release app` 
+`npx shadow-cljs release app`
 
 or just
 
@@ -24,15 +24,15 @@ if you have `shadow-cljs` installed globally.
 
 The production release targets the node file [/public/out/get-hotshot-score.js.](/public/out/get-hotshot-score.js)
 
-Refer to [shadow-cljs.edn](.\shadow-cljs.edn) for more information about how this repo is bulit. 
+Refer to [shadow-cljs.edn](./shadow-cljs.edn) for more information about how this repo is bulit.
 
 Any hotshot data you want to test can be passed into this script. You can run it using the command
 
 `node .\public\out\get-hotshot-score.js <input>`
 
-An example use case is provided below. 
+An example use case is provided below.
 
-```
+```powershell
 hotshot> node .\public\out\get-hotshot-score.js "{'body':
 >>    [{
 >>         'made_shots': ['green1', 'gray2', 'red2'],
@@ -67,11 +67,3 @@ hotshot> node .\public\out\get-hotshot-score.js "{'body':
 >>         'attempted_shots': ['green1', 'yellow1', 'gray1', 'blue2', 'red2']}]}"
 [9 21 56 68 75 75 90 100 114 129]
 ```
-
-
-
-
-
-
-
-
